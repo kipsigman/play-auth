@@ -32,22 +32,4 @@ class UserOptionOwnedEntitySpec extends WordSpec with Matchers with TestData {
       anonymousEntity.isOwnedBy(Option(user)) shouldBe false
     }
   }
-  
-  "canEdit" should {
-    "return true if userId is defined and matches user" in {
-      userOptionOwnedEntity.userIdOption.isDefined shouldBe true
-      user.id.isDefined shouldBe true
-      userOptionOwnedEntity.userIdOption shouldBe user.id
-      userOptionOwnedEntity.canEdit(Option(user)) shouldBe true
-    }
-    "return false if userId is defined but does not match user" in {
-      userOptionOwnedEntity.userIdOption.isDefined shouldBe true
-      user2.id.isDefined shouldBe true
-      userOptionOwnedEntity.canEdit(Option(user2)) shouldBe false
-    }
-    "return true if userId is not defined" in {
-      anonymousEntity.userIdOption shouldBe None
-      anonymousEntity.canEdit(Option(user)) shouldBe true
-    }
-  }
 }
