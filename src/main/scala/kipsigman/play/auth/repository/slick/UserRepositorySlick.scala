@@ -33,18 +33,18 @@ class UserRepositorySlick @Inject()(dbConfigProvider: DatabaseConfigProvider)(im
    * @return The found user or None if no user for the given login info could be found.
    */
   override def find(loginInfo: LoginInfo) = {
-    val userQuery = for {
+    val loginUserQuery = for {
       dbLoginInfo <- findLoginInfo(loginInfo)
       dbUserLoginInfo <- dbUserLoginInfoQuery.filter(_.loginInfoId === dbLoginInfo.id)
       dbUser <- dbUserQuery.filter(_.id === dbUserLoginInfo.userId)
     } yield dbUser
-    db.run(dbUserQuery.result.headOption).map { dbUserOption =>
+    db.run(loginUserQuery.result.headOption).map { dbUserOption =>
       dbUserOption.map { user =>
         User(user.id, loginInfo, user.firstName, user.lastName, user.email, user.avatarURL, user.roles)
       }
     }
   }
-
+  
   /**
    * Finds a user by its user ID.
    *

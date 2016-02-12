@@ -63,10 +63,14 @@ abstract class UserController (
     Future.successful(Ok(userView))
   }
 
-  def signIn = UserAwareAction.async { implicit request =>
+  def signIn(successUrl: Option[String] = None) = UserAwareAction.async { implicit request =>
     request.identity match {
       case Some(user) => Future.successful(Redirect(homeRoute))
-      case None => Future.successful(Ok(signInView(SignInForm.form)))
+      case None => {
+        val theData = SignInForm.Data(successUrl = successUrl)
+        val theForm = SignInForm.form.fill(theData)
+        Future.successful(Ok(signInView(theForm)))
+      }
     }
   }
   
@@ -76,7 +80,7 @@ abstract class UserController (
       data => {
         val credentials = Credentials(data.email, data.password)
         credentialsProvider.authenticate(credentials).flatMap { loginInfo =>
-          val result = Redirect(homeRoute)
+          val result = data.successUrl.map(url => Redirect(url)).getOrElse(Redirect(homeRoute))
           userService.retrieve(loginInfo).flatMap {
             case Some(user) =>
               env.authenticatorService.create(loginInfo).map {
@@ -110,10 +114,14 @@ abstract class UserController (
     env.authenticatorService.discard(request.authenticator, result)
   }
 
-  def signUp = UserAwareAction.async { implicit request =>
+  def signUp(successUrl: Option[String] = None) = UserAwareAction.async { implicit request =>
     request.identity match {
       case Some(user) => Future.successful(Redirect(homeRoute))
-      case None => Future.successful(Ok(signUpView(SignUpForm.form)))
+      case None => {
+        val theData = SignUpForm.Data(successUrl = successUrl)
+        val theForm = SignUpForm.form.fill(theData)
+        Future.successful(Ok(signUpView(theForm)))
+      }
     }
   }
   
@@ -141,7 +149,7 @@ abstract class UserController (
               authInfo <- authInfoRepository.add(loginInfo, authInfo)
               authenticator <- env.authenticatorService.create(loginInfo)
               value <- env.authenticatorService.init(authenticator)
-              result <- env.authenticatorService.embed(value, Redirect(homeRoute))
+              result <- env.authenticatorService.embed(value, data.successUrl.map(url => Redirect(url)).getOrElse(Redirect(homeRoute)))
             } yield {
               env.eventBus.publish(SignUpEvent(user, request, request2Messages))
               env.eventBus.publish(LoginEvent(user, request, request2Messages))
@@ -158,14 +166,16 @@ object SignInForm {
     mapping(
       "email" -> email,
       "password" -> nonEmptyText,
-      "rememberMe" -> boolean
+      "rememberMe" -> boolean,
+      "successUrl" -> optional(text)
     )(Data.apply)(Data.unapply)
   )
 
   case class Data(
-    email: String,
-    password: String,
-    rememberMe: Boolean)
+    email: String = "",
+    password: String = "",
+    rememberMe: Boolean = true,
+    successUrl: Option[String] = None)
 }
 
 object SignUpForm {
@@ -174,13 +184,15 @@ object SignUpForm {
       "firstName" -> nonEmptyText,
       "lastName" -> nonEmptyText,
       "email" -> email,
-      "password" -> nonEmptyText
+      "password" -> nonEmptyText,
+      "successUrl" -> optional(text)
     )(Data.apply)(Data.unapply)
   )
 
   case class Data(
-    firstName: String,
-    lastName: String,
-    email: String,
-    password: String)
+    firstName: String = "",
+    lastName: String = "",
+    email: String = "",
+    password: String = "",
+    successUrl: Option[String] = None)
 }
