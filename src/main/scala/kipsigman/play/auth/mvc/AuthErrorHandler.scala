@@ -69,6 +69,7 @@ trait AuthHttpErrorHandler extends AuthErrorHandler with HttpErrorHandler {
   
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     userAwareResult(request) {implicit r =>
+      logger.error("Internal Server Error", exception)
       serverError(exception)
     }
   }
