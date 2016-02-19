@@ -7,7 +7,7 @@ scalaVersion := "2.11.7"
 
 // Change this to another test framework if you prefer
 libraryDependencies ++= Seq(
-  "kipsigman" %% "scala-domain-model" % "0.1.2",
+  "kipsigman" %% "scala-domain-model" % "0.1.4",
   "com.mohiva" %% "play-silhouette" % silhouetteVersion,
   "net.ceedubs" %% "ficus" % "1.1.2",
   "org.scalatest" %% "scalatest" % "2.2.5" % Test,
