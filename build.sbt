@@ -5,9 +5,10 @@ organization := "kipsigman"
 
 scalaVersion := "2.11.7"
 
-// Change this to another test framework if you prefer
+resolvers += Resolver.bintrayRepo("kipsigman", "maven")
+
 libraryDependencies ++= Seq(
-  "kipsigman" %% "scala-domain-model" % "0.1.4",
+  "kipsigman" %% "scala-domain-model" % "0.1.5",
   "com.mohiva" %% "play-silhouette" % silhouetteVersion,
   "net.ceedubs" %% "ficus" % "1.1.2",
   "org.scalatest" %% "scalatest" % "2.2.5" % Test,
