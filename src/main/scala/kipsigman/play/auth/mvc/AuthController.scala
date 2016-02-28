@@ -6,11 +6,11 @@ import scala.concurrent.Future
 import com.mohiva.play.silhouette.api.Authorization
 import com.mohiva.play.silhouette.api.Environment
 import com.mohiva.play.silhouette.impl.authenticators.CookieAuthenticator
+import kipsigman.domain.entity.Role
 import play.api.i18n.Messages
 import play.api.i18n.MessagesApi
 import play.api.mvc.Request
 
-import kipsigman.play.auth.entity.Role
 import kipsigman.play.auth.entity.User
 
 /**

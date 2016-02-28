@@ -1,16 +1,15 @@
 package kipsigman.play.auth.repository.slick
 
-import javax.inject.Inject
-import javax.inject.Singleton
-
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.util.PasswordInfo
 import com.mohiva.play.silhouette.impl.daos.DelegableAuthInfoDAO
+
+import javax.inject.Inject
+import javax.inject.Singleton
 import play.api.db.slick.DatabaseConfigProvider
-import play.api.db.slick.HasDatabaseConfig
 import slick.backend.DatabaseConfig
 import slick.driver.JdbcProfile
 

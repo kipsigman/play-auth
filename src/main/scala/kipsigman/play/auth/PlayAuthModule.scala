@@ -48,7 +48,7 @@ import kipsigman.play.auth.repository.slick.UserRepositorySlick
  * Module for all Auth/User dependencies. 
  * Auth implemented with Silhouette: http://silhouette.mohiva.com/.
  */
-class AuthModule(
+class PlayAuthModule(
     environment: play.api.Environment,
     configuration: Configuration) extends AbstractModule {
   

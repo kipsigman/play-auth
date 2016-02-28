@@ -8,7 +8,7 @@ scalaVersion := "2.11.7"
 resolvers += Resolver.bintrayRepo("kipsigman", "maven")
 
 libraryDependencies ++= Seq(
-  "kipsigman" %% "scala-domain-model" % "0.1.5",
+  "kipsigman" %% "play-extensions" % "0.2.0",
   "com.mohiva" %% "play-silhouette" % silhouetteVersion,
   "net.ceedubs" %% "ficus" % "1.1.2",
   "org.scalatest" %% "scalatest" % "2.2.5" % Test,

@@ -1,8 +1,8 @@
 package kipsigman.play.auth.repository.slick
 
 import kipsigman.domain.entity.IdEntity
-import kipsigman.domain.repository.slick._
-import kipsigman.play.auth.entity._
+import kipsigman.domain.entity.Role
+import kipsigman.domain.repository.slick.TableGroupConfig
 
 trait AuthDBConfig extends TableGroupConfig {
 
