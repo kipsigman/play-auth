@@ -14,21 +14,11 @@ import kipsigman.play.auth.repository.UserRepository
 
 @Singleton
 class UserService @Inject() (userRepository: UserRepository)(implicit ec: ExecutionContext) extends IdentityService[User] {
+  
+  def find(id: Int): Future[Option[User]] = userRepository.find(id)
 
-  /**
-   * Retrieves a user that matches the specified login info.
-   *
-   * @param loginInfo The login info to retrieve a user.
-   * @return The retrieved user or None if no user could be retrieved for the given login info.
-   */
   def retrieve(loginInfo: LoginInfo): Future[Option[User]] = userRepository.find(loginInfo)
 
-  /**
-   * Saves a user.
-   *
-   * @param user The user to save.
-   * @return The saved user.
-   */
   def save(user: User) = userRepository.save(user)
 
   /**
