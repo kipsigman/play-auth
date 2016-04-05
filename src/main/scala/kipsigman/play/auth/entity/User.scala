@@ -15,10 +15,6 @@ case class User(
   roles: Set[Role] = Set(Role.Member)) extends kipsigman.domain.entity.User with Identity
 
 object User {
-  implicit val roleWrites: Writes[Role] = new Writes[Role] {
-    def writes(role: Role) = JsString(role.name)
-  }
-  
   implicit val writes: Writes[User] = (
     (JsPath \ "id").writeNullable[Int] and
     (JsPath \ "firstName").writeNullable[String] and

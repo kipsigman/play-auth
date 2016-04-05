@@ -7,7 +7,7 @@ Add the following to your `build.sbt` file:
 ```scala
 resolvers += Resolver.bintrayRepo("kipsigman", "maven")
 
-libraryDependencies += "kipsigman" %% "play-auth" % "0.2.1"
+libraryDependencies += "kipsigman" %% "play-auth" % "0.3.0"
 ```
 
 ## Usage
